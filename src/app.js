@@ -16,8 +16,11 @@ app.use(express.static('public'));
 // import routes
 import healthcheckRouter from './routes/healthcheck.routes.js';
 
+import userRouter from './routes/user.routes.js';
+
 // routes
 
 app.use("/api/v1/healthcheck", healthcheckRouter)
-
+app.use("/api/v1/users", userRouter)
+app.use(errorHandler) // error handler middleware
 export { app };

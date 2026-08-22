@@ -2,7 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import ddotenv from "dotenv";
 
-ddotenv.config();
+dotenv.config();
 
 async function configureCloudinary() {
   // Configuration

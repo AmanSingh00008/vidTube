@@ -169,15 +169,36 @@ const RefreshAccessToken = asyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          { accessToken,
-             refreshToken: newRefreshToken
-          },
+          { accessToken, refreshToken: newRefreshToken },
           "Access token refreshed successfully"
         )
       );
   } catch (error) {
-    throw new ApiError(500, "Something went wrong while refreshing access token")
+    throw new ApiError(
+      500,
+      "Something went wrong while refreshing access token"
+    );
   }
 });
 
-export { registerUser, loginUser, RefreshAccessToken };
+const logoutUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.User._id,
+    {
+      $set: {
+        refreshToken: "" || undefined,
+      },
+    },
+    { new: true }
+  );
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV ==="production",
+  }
+  return res
+   .status(200)
+   .clearCookies("accessToken", options)
+   .clearCookies("refreshToken", options)
+   .json(new ApiResponse(200,{}, "user logged out successfully"))
+});
+export { registerUser, loginUser, RefreshAccessToken ,logoutUser };

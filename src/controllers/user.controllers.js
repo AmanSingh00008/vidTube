@@ -202,6 +202,41 @@ const logoutUser = asyncHandler(async (req, res) => {
    .json(new ApiResponse(200,{}, "user logged out successfully"))
 });
 
+const changeCurrentPassword = asyncHandler(async(req, res) => {
+    const {oldPassword, newpassword} = req.body;
+    
+    const user = await User.findById(req.user?._id)
 
+   const isPasswordValid = user.isPasswordCorrect(oldPassword)
 
-export { registerUser, loginUser, RefreshAccessToken ,logoutUser };
+   if(!isPasswordValid){
+    throw new ApiError(401, "old password is incorrect")
+   }
+  
+   user.password = newpassword
+   await user.save({validateBeforeSave: false})
+
+   return res
+   .status(200)
+   .json(new ApiResponse(200, {}, "password change successfully"))
+
+   
+})
+
+const getCurrentUser = asyncHandler(async(req, res) => {
+    //
+})
+
+const updateAccountDetails = asyncHandler(async(req, res) => {
+  //
+})
+
+const updateUserAvatar = asyncHandler(async(req, res) => {
+  //
+})
+
+const updateUserCoverImage = asyncHandler(async(req, res) => {
+  //
+})
+
+export { registerUser, loginUser, RefreshAccessToken ,logoutUser, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar,updateUserCoverImage };

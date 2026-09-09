@@ -9,7 +9,7 @@ import {uploadOncloudinary} from "../utils/cloudinary.js"
 
 const getAllVideos = asynHandler(async(req , res) => {
     const video = await video.findOne({});
-    
+
     
     res 
       .status(200)
@@ -21,7 +21,25 @@ const getAllVideos = asynHandler(async(req , res) => {
 })
 
 const getVideoById = asynHandler(async(req , res) => {  
-       
+
+       const {Videoid} = req.params;
+       const video = await video.findById(Videoid);
+
+       if(!video){
+        throw new ApiError(404, "video not found")
+       }
+       res 
+        .status(200)
+        .json(new ApiResponse(200, video, "video fetched successfully"))
+
+
+
 })
+
+export {
+    getAllVideos,
+    getVideoById,
+}
+
 
 

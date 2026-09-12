@@ -64,4 +64,27 @@ const updateVideo = asyncHandler(async (req, res) => {
         );
 });
 
-export { getAllVideos, getVideoById, updateVideo };
+const deleteVideo = asyncHandler(async (req, res) => {
+    const { videoId } = req.params;
+
+    if (!videoId) {
+        throw new ApiError(400, "Video ID is required");
+    }
+
+    const deletedVideo = await Video.findByIdAndDelete(videoId);
+
+    if (!deletedVideo) {
+        throw new ApiError(404, "Video not found");
+    }
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                deletedVideo,
+                "Video deleted successfully"
+            )
+        );
+});
+export { getAllVideos, getVideoById, updateVideo, deleteVideo };

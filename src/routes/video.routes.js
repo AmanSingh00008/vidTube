@@ -6,6 +6,7 @@ const router = Router();
 router.route("/getAllvideos").get(getAllVideos)
 router.route("/getVideoById").get(getVideoById)
 router.route("/updateVideo").put(updateVideo)
+router.route("/deleteVideo").delete(deleteVideo)
 
 
 export default router;

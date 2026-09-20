@@ -19,4 +19,15 @@ const getComment = asyncHandler(async (req, res) => {
     });
 });
 
-export {createComment, getComment};
+const deleteComment = asyncHandler(async(req, res) => {
+    const {comment} = req.userId.params;
+    const deletedComment = await commentModel.deleteComment(comment);
+    res.status(200).json({
+        success: true,
+        data: deletedComment
+    });
+});
+
+
+
+export {createComment, getComment, deleteComment};

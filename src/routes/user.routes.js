@@ -33,7 +33,6 @@ router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/change-password").post(changeCurrentPassword)
 router.route("/current-user").post(verifyJWT,getCurrentUser)
 
-router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 
 router.route("/update-account").patch(verifyJWT,updateAccountDetails)
 
